@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/aditya-amlesh-jha/url-shortener/server/config"
+	"github.com/aditya-amlesh-jha/url-shortener/config"
 	_ "github.com/go-sql-driver/mysql"
 )
 

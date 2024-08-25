@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/aditya-amlesh-jha/url-shortener/server/models"
-	"github.com/aditya-amlesh-jha/url-shortener/server/utils"
+	"github.com/aditya-amlesh-jha/url-shortener/models"
+	"github.com/aditya-amlesh-jha/url-shortener/utils"
 	"github.com/redis/go-redis/v9"
 )
 
