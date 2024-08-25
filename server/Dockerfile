@@ -1,33 +1,18 @@
-# Use the official Golang image as a parent image
+# Build stage
 FROM golang:1.22.0 AS builder
 
-# Set the Current Working Directory inside the container
 WORKDIR /app
 
-# Copy the go.mod and go.sum files
-COPY go.mod go.sum ./
+COPY go.mod ./
+COPY go.sum ./
 
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
-# Copy the source code into the container
-COPY . .
+COPY ./ ./
 
-# Build the Go app
-RUN go build -o main .
+RUN chmod +x wait-for-it.sh
+RUN go build -o /go-exec
 
-# Start a new stage from scratch
-FROM alpine:latest  
-
-WORKDIR /root/
-
-# Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/main .
-
-RUN chmod +x main
-
-# Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Command to run the executable
-ENTRYPOINT ["/root/main"]
+CMD ["./wait-for-it.sh", "mysql:3306", "--", "./wait-for-it.sh", "redis:6379", "--", "/go-exec"]

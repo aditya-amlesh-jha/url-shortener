@@ -20,7 +20,7 @@ func getEnv(key string, fallback string) string {
 func LoadConfig() *Config {
 	return &Config{
 		ServerPort: getEnv("SERVER_PORT", ":8080"),
-		MySQLURI:   getEnv("MYSQLURI", "user:password@tcp(localhost:3306)/urlshortener"),
-		RedisAddr:  getEnv("RedisAddr", "localhost:6379"),
+		MySQLURI:   getEnv("MYSQLURI", "user:password@tcp(mysql:3306)/urlshortener"),
+		RedisAddr:  getEnv("RedisAddr", "redis:6379"),
 	}
 }
