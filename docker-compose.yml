@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  url-shortener:
+    image: url-shortener-image
+    container_name: url-shortener
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=:8080
+      - MYSQLURI=mysql://user:password@tcp(mysql:3306)/urlshortener
+      - REDIS_ADDR=redis:6379
+    depends_on:
+      - mysql
+      - redis
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: urlshortener
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"  # Map port 3306 on the host to port 3306 in the container
+    volumes:
+      - mysql-data:/var/lib/mysql  # Persist data in a Docker volume
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"  # Map port 6379 on the host to port 6379 in the container
+
+volumes:
+  mysql-data:
+    driver: local
