@@ -21,6 +21,9 @@ func main() {
 	defer db.Close()
 	defer redisClient.Close()
 
+	// try to create table
+	models.CreateTable(db)
+
 	// Get a url Handler
 	urlHandler := handler.GetNewURLHandler(db, redisClient)
 
