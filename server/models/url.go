@@ -18,7 +18,7 @@ func InsertURL(db *sql.DB, shortURL string, longURL string) (int64, error) {
 	return res.LastInsertId()
 }
 
-func GetUrlByShort(db *sql.DB, shortURL string) (URL, err) {
+func GetUrlByShort(db *sql.DB, shortURL string) (URL, error) {
 	var url URL
 	row := db.QueryRow("Select id, short_url, long_url from urls where short_url = ?", shortURL)
 	if err := row.Scan(&url.ID, &url.ShortURL, &url.LongURL); err != nil {
