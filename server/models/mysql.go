@@ -23,7 +23,7 @@ func InitMySQL(cfg *config.Config) *sql.DB {
 }
 
 func CreateTable(db *sql.DB) {
-	_, err := db.Exec("CREATE TABLE IF NOT EXISTS users (id INT PRIMARY KEY AUTO_INCREMENT, short_url VARCHAR(255), long_url VARCHAR(255))")
+	_, err := db.Exec("CREATE TABLE IF NOT EXISTS urls (id INT PRIMARY KEY AUTO_INCREMENT, short_url VARCHAR(255), long_url VARCHAR(255))")
 
 	if err != nil {
 		log.Fatalf("Failed to create table users %v :: ", err)
