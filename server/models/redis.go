@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/aditya-amlesh-jha/url-shortener/server/config"
+	"github.com/aditya-amlesh-jha/url-shortener/config"
 	"github.com/redis/go-redis/v9"
 )
 
