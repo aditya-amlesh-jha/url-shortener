@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/aditya-amlesh-jha/url-shortener/config"
-	"github.com/aditya-amlesh-jha/url-shortener/handler"
-	"github.com/aditya-amlesh-jha/url-shortener/models"
+	"github.com/aditya-amlesh-jha/url-shortener/server/config"
+	"github.com/aditya-amlesh-jha/url-shortener/server/handler"
+	"github.com/aditya-amlesh-jha/url-shortener/server/models"
 )
 
 func main() {
