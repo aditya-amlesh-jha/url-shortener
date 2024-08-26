@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
+	"log"
 
 	"github.com/aditya-amlesh-jha/url-shortener/models"
 	"github.com/aditya-amlesh-jha/url-shortener/utils"
@@ -44,6 +45,8 @@ func (h *URLHandler) ShortURL(w http.ResponseWriter, r *http.Request) {
 	shortURL := utils.GenerateShortURL(longURL)
 
 	_, err := models.InsertURL(h.db, shortURL, longURL)
+
+	log.Printf("Value of shortUrl is %v :: ", shortURL)
 
 	if err != nil {
 		http.Error(w, "Failed to store URL", http.StatusInternalServerError)
