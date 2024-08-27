@@ -27,6 +27,7 @@ func main() {
 	// Get a url Handler
 	urlHandler := handler.GetNewURLHandler(db, redisClient)
 
+	// Register routes
 	http.HandleFunc("/shorten", urlHandler.ShortURL)
 	http.HandleFunc("/redirect/", urlHandler.RedirectURL)
 

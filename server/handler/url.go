@@ -33,7 +33,14 @@ func GetNewURLHandler(db *sql.DB, redisClient *redis.Client) *URLHandler {
 	}
 }
 
+// @post -> /shorten r.long_url = long url
 func (h *URLHandler) ShortURL(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request valid", http.StatusMethodNotAllowed)
+		return
+	}
+
 	var req map[string]string
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -54,9 +61,21 @@ func (h *URLHandler) ShortURL(w http.ResponseWriter, r *http.Request) {
 	}
 
 	h.redisClient.Set(ctx, shortURL, longURL, expiryTime())
+
+	// send the short_url in response
+	response := map[string]string{"short_url":short_url}
+	json.NewEncoder(w).Encode(response)
 }
 
+// @get -> /redirect/short_url
 func (h *URLHandler) RedirectURL(w http.ResponseWriter, r *http.Request) {
+
+	// this is a get request
+	if r.Method != http.MethodGet {
+		http.Error(w, "Invalid request", http.StatusMethodNotAllowed)
+		return
+	}
+
 	shortURL := r.URL.Path[len("/redirect/"):]
 
 	longURL, err := h.redisClient.Get(ctx, shortURL).Result()
